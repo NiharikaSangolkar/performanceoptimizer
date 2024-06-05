@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useMemo, useCallback } from 'react';
 
-function App() {
+const Item = React.memo(({ item }) => {
+  // Render item details
+  return <div>{item}</div>;
+});
+
+const App = () => {
+  // State
+  const [items, setItems] = useState(Array.from({ length: 1000 }, (_, i) => `Item ${i}`));
+
+  // Callbacks
+  const handleClick = useCallback(() => {
+    // Handle click
+  }, []);
+
+  // Memoized rendering
+  const optimizedItems = useMemo(() => {
+    // Perform any expensive computations
+    return items.map((item, index) => <Item key={index} item={item} />);
+  }, [items]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {/* Render optimized items */}
+      {optimizedItems}
+
+      {/* Example of an interactive element */}
+      <button onClick={handleClick}>Click</button>
     </div>
   );
-}
+};
 
 export default App;
